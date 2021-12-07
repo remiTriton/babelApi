@@ -6,5 +6,7 @@ COPY . .
 
 RUN npm ci
 
+CMD npm run dev
+
 EXPOSE 3001
 
