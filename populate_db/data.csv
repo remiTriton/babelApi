@@ -1,21 +1,24 @@
-cuvee;domaine;cepage;millesime;vigneron;couleur;description;region;pays;prix
+Couleur;CUVEE;domaine;departement;region;pays;millesime;cepage;Vigneron;prix;Quantité;Description
 
+Rosé;COUP DE POUCE;La Ferme du Cade;;Languedoc-Rousillon;France;2019;Syrah;LA FERME DU CADE;;0;C'est un super jus, frais, vineux, pas très intense, qui se boit si facilement.
+Rosé;CRUNCHY STRAWBERRIES;Nénu;;Languedoc-Rousillon;France;2019;Grenache, Mouvèdre;NENU;;0;Un rosé très fruite. Sur les fruit rouges, fraise, framboise… rose de l’été
+Rosé;LES PLANES;;;;France;;;LA FERME DU CADE;;0;
+Rosé;ROSE GAMAY;Vincent Tricot;; Languedoc-Rousillon;France;2018;Gamay;TRICOT;;0;Rosé sur les fruits, avec une belle acidité. Parfois un peu trouble.
+Rosé;HARU;;;;France;;;DOMAINE MILAN;;0;
+Rosé;TERRAFURIE;Cotzé;;Languedoc-Rousillon;France;2020;Chardonnay, Syrah, Muscat à petit grain;COTZE;;0;Rosé sur les fruits. Aromatique, pas pour tout le monde. Spéciale.
+Rosé;FIER HERETIQUE;La Sorga;;Languedoc-Rousillon;France;2018;Niellucciu, Mouvèdre, Muscat d’Alexandria, Muscat à petits grains, Cardinal, Chasselas, Listan, Sauvignon;LA SORGA;;0;Les raisins blancs sont laissés en grappes entières et trempent dans le jus de presse directe des raisins rouges pendant trente-cinq jours. Notes d’agrumes et de fruits blancs. Aromatique.
+Rosé;PINK OCEANS ON A MOUNTAIN TOP;Nénu;;Languedoc-Rousillon;France;2019;Grenache, Mouvèdre;NENU;;0;Rosé clair, légèrement sur le fruit. Saline.
+Rosé;FATALE;Cathrine Bernard x Vin des Potes;;Languedoc-Rousillon;France;2020;Grenache, Carignan;VIN DES POTES X BERNARD;;0;Rosé foncée, très florale sur les fruits. 
+Rosé;ROSA PUGLIA;Calcarius;;Pouilles;Italie;2020;Negroamaro;CALCARIUS;;0;Fruitée et salin et florales. Finale énergique ! 
+Rosé;SUSUCARU ROSATO;Franck Cornelissen;;Sicilie;Italie;2020;Malvasia, Moscadella, insolia, Nerello mascalese;FRANK CORNELISSEN;;0;Une belle fraicheur, beaucoup de fruits et une légère amertume.   Très jolie rosé.
+Rosé;ROSATO;Le Coste;;Lazio;Italie;2019;Aleatico;LE COSTE;;0;Un vin rosé doux arômes de fruits rouges. Frais et aux notes herbacées. Délicat, fragile et élégant. 
+Rosé;PANDA;;;;Italie;;;LAMMIDIA;;0;
+Rosé;CLOÉ;;;;Italie;;;ABBAZIA SAN GIORGIO;;0;
+Rosé;FREAKY;;;;Italie;;;SETE;;0;
+Rosé;ROIG BOIG;La Salada;;Catalogne;Espagne;2019;Xarel-lo, Monica, Sumoll, Chardonnay;LA SALADA;;0;Super fruité. Fruits rouges, fraises, framboise.
+Rosé;CROAC CROAK;Clos Lentiscus;;Catalogne;Espagne;2018; Xarel-lo, Tempranillo;CLOS LENTISCUS;;0;Un rosé très léger. Un peu trouble, facile à boire, légèrement sur les bais rouges.
+Rosé;La Prats;Oriol Artigas;;Catalogne;Espagne;2018;Pensa blanca, Sumos, Beier, Granatxa blanca, Muscat;ORIOL ARTIGAS;;0;Un vin de macération, très gastronomie, dense, profond, complexe et frais.
+Rosé;VINO COSTA;Barranco Oscuro;;Catalogne;Espagne;2010;Listan noir, Palomino;BARRANCO OSCURO;;0;"Un rosé un peu atypique. Il faut vraiment mange avec. Légèrement oxydative, notes sur la noix.
+Rosé;FREAKY;;;;Espagne;;;SETE;;0;
+Rosé;TO KOKKINAKI;Domaine Kalathas;;Samos;Grèce;2019;Mandilaria;DOMAINE DE KALATHAS;;0;Un rosé gourmande, rond. Délicatement fruité et florale. Belle fraicheur.
 
-
-Rouge;Antocyame;18H17;Midi-Pyrénées;France;2018;syrah;Benoît + Sébastien Danjou;6.00
-Rouge;Arena;Carco;Corse;France;2018;100 % nielluccio;Antoine-Marie Arena;14.00
-Rouge;Auprès de mon cep ;La Soif du Bagnard;Hérault;France;2015;syrah, grenach, vermentino nero;Ian Lu;5.40
-Rouge;Aurélien Lefort ;Buisson Ardent;Auvergne;France;2017;gamay d’Auvergne;Aurélien Lefort;32.50
-Rouge;Azienda agricola Foradori;Lezèr;Trentino-Alto-Adige;Italie ;2018;teroldego;Elisabetta Foradori;11.50
-Rouge;Balansa;Can del Rey;Aude;France;2017;carignan, grenache noir, syrah;Céline Peyre + Alex Gresent;10.20
-Rouge;Barranco Oscuro;Cerro la Monjas 1368;Andalousie;Espagne;2015;sauvignon, cabernet franc. merlot et grenache;la Famille Valenzuela;33.80
-Rouge;Calabretta vini;Piedefranco ;Sicile;Italie;2017;nerello mascalese;Massimiliano Calabretta;23.00
-Blanc;Antocyame;Blanc de Zinc ;Tarn-et-Garonne;France ;2018;100 % chardonnay;Muriel Zoldan ;6.50
-Blanc;Arena;BG;Corse;France;2018;bianco gentile;Antoine-Marie Arena;15.00
-Blanc;Azienda agricola SETE;Tropical;Lazio;Italie;2019;Ottonese;Azienda agricola SETE;8.50
-Blanc;Azienda agricola SETE;Maya;Lazio;Italie;2019;Moscato;Azienda agricola SETE;9.50
-Blanc;Azienda agricola SETE;Flora;Lazio;Italie;2019;Moscato;Azienda agricola SETE;11.00
-Blanc;Balansa;Aragon;Lanquedoc-roussillon;France;2018;muscat petit grain, muscat d’Alexandrie ;Céline Peyre + Alex Gresent;8.90
-Blanc;Barranco Oscurro;Cardonohay;Andalousie;Espagne;2012;chardonnay;la Famille Valenzuela;18.20
-Blanc;Calcarius ;Bianco Puglia;Pouilles ;Italie ;2017;100 % bombino bianco;Valentina Pasalaqua + Danilo Marcucci;8.79
-Blanc;Cascina degli ulivi;Semplimente;Piedmont ;Italie;2019;100% cortese;Bellotti;17.00

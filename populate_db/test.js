@@ -55,18 +55,20 @@ const main = async () => {
                 return null;
             }
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-            const [couleur, cuvee, domaine, region, pays, millesime, cepage, vigneron, prix, quantite] = line.split(';')
+            const [couleur, cuvee, domaine,departement, region, pays, millesime, cepage, vigneron, prix, quantite, description] = line.split(';')
             return {
-                couleur,
-                domaine,
-                cuvee,
-                region,
-                pays,
-                millesime,
-                cepage,
-                vigneron,
-                prix: Number(prix || 0),
-                quantite: Number(quantite || 0)
+              couleur:String(couleur.charAt(0).toUpperCase() + couleur.slice(1).toLowerCase() || ''),
+              domaine:String(domaine.charAt(0).toUpperCase() + domaine.slice(1).toLowerCase() || ''),
+              departement:String(departement.charAt(0).toUpperCase() + departement.slice(1).toLowerCase() || ''),
+              cuvee:String(cuvee.charAt(0).toUpperCase() + cuvee.slice(1).toLowerCase()) || '',
+              region:String(region.charAt(0).toUpperCase() + region.slice(1).toLowerCase() || ''),
+              pays:String(pays.charAt(0).toUpperCase() + pays.slice(1).toLowerCase()) || '',
+              millesime:String(millesime.charAt(0).toUpperCase() + millesime.slice(1).toLowerCase() || ''),
+              cepage:String(cepage.charAt(0).toUpperCase() + cepage.slice(1).toLowerCase()) || '',
+              vigneron:String(vigneron.charAt(0).toUpperCase() + vigneron.slice(1).toLowerCase() || ''),
+              prix: Number(prix || 0),
+              quantite: Number(quantite || 0),
+              description
             };
         })
         // remove NULL document (first line of the doc)
