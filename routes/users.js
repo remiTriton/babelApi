@@ -5,9 +5,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const uri = process.env.MONGODB_URI
-const client = new MongoClient(uri, { 
-   useNewUrlParser: true,
-  useUnifiedTopology: true,
+const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 const database = client.db('Babel');
 const userCol = database.collection('users');
@@ -143,7 +143,8 @@ router.put("/:id", verifyToken, async (req, res) => {
             } finally {
                 await client.close();
             }
-        }})
+        }
+    })
 });
 
 router.delete("/:id", verifyToken, async (req, res) => {
@@ -154,8 +155,13 @@ router.delete("/:id", verifyToken, async (req, res) => {
             try {
                 await client.connect();
                 const query = { _id: new ObjectId(req.params.id) };
-                await userCol.deleteOne(query);
-                res.send("Successfully deleted!");
+                const user = await userCol.findOne(query);
+                if (user.role === "Admin") {
+                    res.send('Access denied');
+                } else {
+                    await userCol.deleteOne(query);
+                    res.send("Successfully deleted!");
+                }
             } finally {
                 await client.close();
             }
