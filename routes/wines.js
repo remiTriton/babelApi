@@ -4,8 +4,8 @@ require('dotenv').config();
 const { MongoClient, ObjectId } = require("mongodb");
 const router = express.Router();
 const uri = process.env.MONGODB_URI
-const client = new MongoClient(uri, { 
-   useNewUrlParser: true,
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 const database = client.db("Babel");
@@ -115,9 +115,16 @@ router.get("/domain/:domaine", async (req, res) => {
 router.get("/color/:couleur", async (req, res) => {
   try {
     await client.connect();
-    const query = { couleur: req.params.couleur };
-    const wine = await wineCol.find(query).toArray();
-    res.send(wine);
+    if (req.params.couleur === "Magnum") {
+      const query = { type: req.params.couleur };
+      const wine = await wineCol.find(query).toArray();
+      res.send(wine);
+
+    } else {
+      const query = { couleur: req.params.couleur };
+      const wine = await wineCol.find(query).toArray();
+      res.send(wine);
+    }
   } finally {
     await client.close();
   }
