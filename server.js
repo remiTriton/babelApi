@@ -17,7 +17,6 @@ app.use('/api/users', usersRouter.router);
 app.use('/api/wines', winesRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/password-reset', passwordReset);
-console.log(process.env.USER, process.env.PASS)
 app.use(cors());
 
 // error handler
@@ -30,9 +29,8 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-console.log(process.env.USER, process.env.PASS)
 app.listen(port, () => {
-  console.log(`backend start on http://localhost:${port}`);
+  console.log(`Successfull connection on port : ${port}`);
 });
 module.exports = app;
 

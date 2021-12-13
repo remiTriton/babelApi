@@ -37,7 +37,6 @@ const upload = multer({ storage: storage, fileFilter: fileFilter, });
 
 router.get("/", async (req, res) => {
   try {
-    console.log(process.env.MONGODB_URI)
     await client.connect();
     const wines = await wineCol.find().toArray();
     res.send(wines);
