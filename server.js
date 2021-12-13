@@ -30,8 +30,9 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
+console.log(process.env.USER, process.env.PASS)
 app.listen(port, () => {
   console.log(`backend start on http://localhost:${port}`);
 });
 module.exports = app;
+
