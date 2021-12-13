@@ -17,7 +17,7 @@ app.use('/api/users', usersRouter.router);
 app.use('/api/wines', winesRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/password-reset', passwordReset);
-console.log(process.env.MONGODB_URI)
+console.log(process.env.USER, process.env.PASS)
 app.use(cors());
 
 // error handler
