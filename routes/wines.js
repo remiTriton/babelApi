@@ -4,8 +4,8 @@ require('dotenv').config();
 const { MongoClient, ObjectId } = require("mongodb");
 const router = express.Router();
 const uri = process.env.MONGODB_URI
-const client = new MongoClient(uri, { 
-   useNewUrlParser: true,
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 const database = client.db("Babel");
@@ -45,30 +45,6 @@ router.get("/", async (req, res) => {
     await client.close();
   }
 });
-
-
-
-router.post('/images/:id', upload.single('file'), async (req, res) => {
-  try {
-    await client.connect();
-    const wine = await wineCol.findOne({ _id: new ObjectId(req.params.id) });
-    if (!wine) {
-      return res.send('Wine not found')
-    }
-    else {
-      console.log(req.file.filename)
-      const path = req.file.path.replace(/\\/g, "/")
-      const result = await wineCol.updateOne({ _id: new ObjectId(req.params.id) },
-        { $set: { winePicture: "@/" + path } })
-      res.send(result)
-    }
-
-  } catch (err) {
-    res.send(err)
-  } finally {
-    await client.close();
-  }
-})
 
 router.get("/:id", async (req, res) => {
   try {
@@ -118,7 +94,7 @@ router.get("/search/:cuvee", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.cuvee
-    const wine = await wineCol.find({ cuvee: { $regex: new RegExp(q) } }).toArray();
+    const wine = await wineCol.find({ cuvee: { $regex: new RegExp(q, "i") } }).toArray();
     res.send(wine);
   } finally {
     await client.close();
@@ -129,7 +105,7 @@ router.get("/domain/:domaine", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.domaine
-    const wine = await wineCol.find({ domaine: { $regex: new RegExp(q) } }).toArray();
+    const wine = await wineCol.find({ domaine: { $regex: new RegExp(q, "i") } }).toArray();
     res.send(wine);
   } finally {
     await client.close();
@@ -139,9 +115,16 @@ router.get("/domain/:domaine", async (req, res) => {
 router.get("/color/:couleur", async (req, res) => {
   try {
     await client.connect();
-    const query = { couleur: req.params.couleur };
-    const wine = await wineCol.find(query).toArray();
-    res.send(wine);
+    if (req.params.couleur === "Magnum") {
+      const query = { type: req.params.couleur };
+      const wine = await wineCol.find(query).toArray();
+      res.send(wine);
+
+    } else {
+      const query = { couleur: req.params.couleur };
+      const wine = await wineCol.find(query).toArray();
+      res.send(wine);
+    }
   } finally {
     await client.close();
   }
@@ -162,7 +145,7 @@ router.get("/region/:region", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.region
-    const query = { region: { $regex: new RegExp(q) } };
+    const query = { region: { $regex: new RegExp(q, "i") } };
     const wine = await wineCol.find(query).toArray();
     res.send(wine);
   } finally {
@@ -173,7 +156,7 @@ router.get("/pays/:pays", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.pays
-    const query = { pays: { $regex: new RegExp(q) } };
+    const query = { pays: { $regex: new RegExp(q, "i") } };
     const wine = await wineCol.find(query).toArray();
     res.send(wine);
   } finally {
