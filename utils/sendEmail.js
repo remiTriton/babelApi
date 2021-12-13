@@ -9,13 +9,13 @@ const sendEmail = async (email, subject, text) => {
             // port: 465,
             // secure: true,
             auth: {
-                user: process.env.USER,
-                pass: process.env.PASS,
+                user: "remitriton@gmail.com",
+                pass: "qzpqwvukqtfdpbdg",
             },
         });
-        console.log(process.env.USER, process.env.PASS)
+        console.log(transporter)
         await transporter.sendMail({
-            from: process.env.USER,
+            from: "remitriton@gmail.com",
             to: email,
             subject: subject,
             text: text,
