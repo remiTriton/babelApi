@@ -191,10 +191,10 @@ router.delete("/:id", users.verifyToken, async (req, res) => {
     }
   })
 });
-router.get("/prix/", async (req, res) => {
+router.get("/price/lowerthan/", async (req, res) => {
   try {
     await client.connect();
-    const wines = await wineCol.find({ prix : {$lt : req.body.prix}}).toArray();
+    const wines = await wineCol.find({ prix : {$lt : Number(req.body.prix)}}).toArray();
     res.send(wines);
   } finally {
     await client.close();
