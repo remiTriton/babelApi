@@ -33,7 +33,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/:skip/:limit", async (req, res) => {
+router.get("/pagination/:skip/:limit", async (req, res) => {
   try{
     await client.connect();
     const skip = parseInt(req.params.skip);
