@@ -1,6 +1,5 @@
 const express = require("express");
 require('dotenv').config();
-
 const { MongoClient, ObjectId } = require("mongodb");
 const router = express.Router();
 const uri = process.env.MONGODB_URI
@@ -12,28 +11,6 @@ const database = client.db("Babel");
 const wineCol = database.collection("wines");
 const users = require('./users')
 const jwt = require('jsonwebtoken');
-const multer = require('multer')
-
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'assets/upload');
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "--" + file.originalname);
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  if ((file.mimetype).includes('jpeg') || (file.mimetype).includes('png') || (file.mimetype).includes('jpg')) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-
-  }
-
-};
-const upload = multer({ storage: storage, fileFilter: fileFilter, });
 
 router.get("/", async (req, res) => {
   try {
@@ -55,6 +32,18 @@ router.get("/:id", async (req, res) => {
     await client.close();
   }
 });
+
+router.get("/:skip/:limit", async (req, res) => {
+  try{
+    await client.connect();
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const wines = await wineCol.find().skip(skip).limit(limit).toArray();
+    res.send(wines)
+  }finally{
+    await client.close();
+  }
+})
 
 router.post("/", users.verifyToken, async (req, res) => {
   jwt.verify(req.token, 'token', async (err, authData) => {
