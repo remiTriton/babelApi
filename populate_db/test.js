@@ -48,7 +48,6 @@ console.log(uri)
     .filter((line) => !!line.trim())
 
 
-<<<<<<< HEAD
     // map string split by `;` to document
     .map((line, i) => {
       // escape first line
@@ -56,58 +55,45 @@ console.log(uri)
         return null;
       }
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-      const [couleur, cuvee, domaine, departement, region, pays, millesime, cepage, vigneron, prix, quantite, description, type] = line.split(';')
-      return {
-        couleur: String(couleur.charAt(0).toUpperCase() + couleur.slice(1).toLowerCase() || ''),
-        domaine: String(domaine.charAt(0).toUpperCase() + domaine.slice(1).toLowerCase() || ''),
-        departement: String(departement.charAt(0).toUpperCase() + departement.slice(1).toLowerCase() ||  ''),
-        cuvee: String(cuvee.charAt(0).toUpperCase() + cuvee.slice(1).toLowerCase()) || '',
-        region: String(region.charAt(0).toUpperCase() + region.slice(1).toLowerCase() || ''),
-        pays: String(pays.charAt(0).toUpperCase() + pays.slice(1).toLowerCase()) || '',
-        millesime: String(millesime.charAt(0).toUpperCase() + millesime.slice(1).toLowerCase() || ''),
-        cepage: String(cepage.charAt(0).toUpperCase() + cepage.slice(1).toLowerCase()) ||  '',
-        vigneron: String(vigneron.charAt(0).toUpperCase() + vigneron.slice(1).toLowerCase() ||  ''),
-        prix: Number(prix ||  0),
-        quantite: Number(quantite || 0),
-        description,
-        type
-      };
-    })
+    //   const [couleur, cuvee, domaine, departement, region, pays, millesime, cepage, vigneron, prix, quantite, description, type] = line.split(';')
+    //   return {
+    //     couleur: String(couleur.charAt(0).toUpperCase() + couleur.slice(1).toLowerCase() || ''),
+    //     domaine: String(domaine.charAt(0).toUpperCase() + domaine.slice(1).toLowerCase() || ''),
+    //     departement: String(departement.charAt(0).toUpperCase() + departement.slice(1).toLowerCase() ||  ''),
+    //     cuvee: String(cuvee.charAt(0).toUpperCase() + cuvee.slice(1).toLowerCase()) || '',
+    //     region: String(region.charAt(0).toUpperCase() + region.slice(1).toLowerCase() || ''),
+    //     pays: String(pays.charAt(0).toUpperCase() + pays.slice(1).toLowerCase()) || '',
+    //     millesime: String(millesime.charAt(0).toUpperCase() + millesime.slice(1).toLowerCase() || ''),
+    //     cepage: String(cepage.charAt(0).toUpperCase() + cepage.slice(1).toLowerCase()) ||  '',
+    //     vigneron: String(vigneron.charAt(0).toUpperCase() + vigneron.slice(1).toLowerCase() ||  ''),
+    //     prix: Number(prix ||  0),
+    //     quantite: Number(quantite || 0),
+    //     description,
+    //     type
+    //   };
+    // })
+    const [couleur, prix, cuvee, domaine, quantite, pays] = line.split(';')
+    return {
+      couleur: String(couleur.charAt(0).toUpperCase() + couleur.slice(1).toLowerCase() || ''),
+      domaine: String(domaine.charAt(0).toUpperCase() + domaine.slice(1).toLowerCase() || ''),
+      // departement: String(departement.charAt(0).toUpperCase() + departement.slice(1).toLowerCase() ||  ''),
+      cuvee: String(cuvee.charAt(0).toUpperCase() + cuvee.slice(1).toLowerCase()) || '',
+      // region: String(region.charAt(0).toUpperCase() + region.slice(1).toLowerCase() || ''),
+      pays: String(pays.charAt(0).toUpperCase() + pays.slice(1).toLowerCase()) || '',
+      // millesime: String(millesime.charAt(0).toUpperCase() + millesime.slice(1).toLowerCase() || ''),
+      // cepage: String(cepage.charAt(0).toUpperCase() + cepage.slice(1).toLowerCase()) ||  '',
+      // vigneron: String(vigneron.charAt(0).toUpperCase() + vigneron.slice(1).toLowerCase() ||  ''),
+      prix: Number(prix ||  0),
+      quantite: Number(quantite || 0),
+      // description,
+      // type
+    };
+  })
     // remove NULL document (first line of the doc)
     .filter(Boolean);
   await wineCol.insertMany(data);
   console.log('done');
   process.exit(0);
-=======
-        // map string split by `;` to document
-        .map((line, i) => {
-            // escape first line
-            if (!i) {
-                return null;
-            }
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-            const [couleur, cuvee, domaine,departement, region, pays, millesime, cepage, vigneron, prix, quantite, description] = line.split(';')
-            return {
-              couleur:String(couleur.charAt(0).toUpperCase() + couleur.slice(1).toLowerCase() || ''),
-              domaine:String(domaine.charAt(0).toUpperCase() + domaine.slice(1).toLowerCase() || ''),
-              departement:String(departement.charAt(0).toUpperCase() + departement.slice(1).toLowerCase() || ''),
-              cuvee:String(cuvee.charAt(0).toUpperCase() + cuvee.slice(1).toLowerCase()) || '',
-              region:String(region.charAt(0).toUpperCase() + region.slice(1).toLowerCase() || ''),
-              pays:String(pays.charAt(0).toUpperCase() + pays.slice(1).toLowerCase()) || '',
-              millesime:String(millesime.charAt(0).toUpperCase() + millesime.slice(1).toLowerCase() || ''),
-              cepage:String(cepage.charAt(0).toUpperCase() + cepage.slice(1).toLowerCase()) || '',
-              vigneron:String(vigneron.charAt(0).toUpperCase() + vigneron.slice(1).toLowerCase() || ''),
-              prix: Number(prix || 0),
-              quantite: Number(quantite || 0),
-              description
-            };
-        })
-        // remove NULL document (first line of the doc)
-        .filter(Boolean);
-    await wineCol.insertMany(data);
-    console.log('done');
-    process.exit(0);
->>>>>>> f6247cc7257be6d7d6755a5fdea162b5e8ff06b1
 }
 main();
 
