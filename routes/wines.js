@@ -2,12 +2,12 @@ const express = require("express");
 require('dotenv').config();
 const {MongoClient, ObjectId} = require("mongodb");
 const router = express.Router();
-const uri = process.env.MONGODB_URI
+const uri = "mongodb://localhost:27017"
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-const database = client.db("Babel");
+const database = client.db("babel");
 const wineCol = database.collection("wines");
 const users = require('./users')
 const jwt = require('jsonwebtoken');
@@ -232,6 +232,19 @@ router.get("/prix/", async (req, res) => {
     } finally {
         await client.close();
     }
+<<<<<<< HEAD
+=======
+  })
+});
+router.get("/price/lowerthan/", async (req, res) => {
+  try {
+    await client.connect();
+    const wines = await wineCol.find({ prix : {$lt : Number(req.body.prix)}}).toArray();
+    res.send(wines);
+  } finally {
+    await client.close();
+  }
+>>>>>>> 7863fc04235330a80116b353901074da50a1b2a2
 });
 
 router.get("/kpi/sum", async (req, res) => {
@@ -275,4 +288,9 @@ router.get("/kpi/sum", async (req, res) => {
 });
 
 
+<<<<<<< HEAD
 module.exports = router;
+=======
+
+module.exports = router;
+>>>>>>> 7863fc04235330a80116b353901074da50a1b2a2

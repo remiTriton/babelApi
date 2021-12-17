@@ -3,11 +3,11 @@ const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 const router = express.Router();
 const uri = process.env.MONGODB_URI
-const client = new MongoClient(uri, { 
-   useNewUrlParser: true,
-  useUnifiedTopology: true,
+const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
-const database = client.db("Babel");
+const database = client.db("babel");
 const userCol = database.collection("users");
 const sendEmail = require('../utils/sendEmail');
 const bcrypt = require('bcryptjs')
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
                     id: user._id,
                     email: user.email,
                     role: user.role,
-                }, iat: Math.floor(Date.now() / 1000) + (60 * 60), expiresIn: 60 * 60 
+                }, iat: Math.floor(Date.now() / 1000) + (60 * 60), expiresIn: 60 * 60
             }, 'token', (err, token) => {
                 res.status(200).json({
                     user: user, token: token
@@ -45,15 +45,15 @@ router.post("/", async (req, res) => {
 
             });
         }
-        const tok = await tokenPass.insertOne({ 
+        const tok = await tokenPass.insertOne({
             iat: Math.floor(Date.now() / 1000) + (60 * 60), expiresIn: 60 * 60
         });
-        const tak = await tokenPass.findOne({_id: new ObjectId(tok.insertedId)})
+        const tak = await tokenPass.findOne({ _id: new ObjectId(tok.insertedId) })
 
         console.log(tak)
 
         const link = `${process.env.LINK_MAIL}${user._id}/${tak._id}`;
-        await sendEmail(user.email, "Password reset", "Bonjour, il semblerait que vous ayiez fait une demande de nouveau mot de passe, Veuillez vous rendre à cette adresse :" + link );
+        await sendEmail(user.email, "Password reset", "<p>Bonjour ,</br> Il semblerait que vous ayez fait une demande de nouveau mot de passe, veuillez cliquer sur ce lien :</p>  " + link + "</br> Si vous n'êtes pas à l'origine de cette action, veuillez ne pas cliquer. </br>Nous vous souhaitons une bonne journée, l'équipe du Babel.");
 
     } catch (error) {
         console.log(error)
@@ -66,7 +66,7 @@ router.post('/:userId/:tokenId', users.verifyToken, async (req, res) => {
     try {
         await client.connect();
         const user = await userCol.findOne({ _id: new ObjectId(req.params.userId) });
-        const token = await tokenPass.findOne({_id:new ObjectId(req.params.tokenId)});
+        const token = await tokenPass.findOne({ _id: new ObjectId(req.params.tokenId) });
         if (!user || !token)
             return res.status(400).send('invalid link or expired');
 
@@ -86,7 +86,7 @@ router.post('/:userId/:tokenId', users.verifyToken, async (req, res) => {
                     password: hash
                 }
             });
-            await tokenPass.deleteOne({ _id: new ObjectId(req.params.tokenId)})
+        await tokenPass.deleteOne({ _id: new ObjectId(req.params.tokenId) })
         console.log(hash)
         res.status(200).send('password updatedt LUL')
     } finally {
