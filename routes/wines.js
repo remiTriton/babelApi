@@ -12,7 +12,6 @@ const wineCol = database.collection("wines");
 const users = require('./users')
 const jwt = require('jsonwebtoken');
 
-
 router.get("/", async (req, res) => {
   try {
     await client.connect();
@@ -35,13 +34,13 @@ router.get("/:id", async (req, res) => {
 });
 
 router.get("/pagination/:skip/:limit", async (req, res) => {
-  try {
+  try{
     await client.connect();
     const skip = parseInt(req.params.skip);
     const limit = parseInt(req.params.limit);
     const wines = await wineCol.find().skip(skip).limit(limit).toArray();
     res.send(wines)
-  } finally {
+  }finally{
     await client.close();
   }
 })
@@ -159,6 +158,7 @@ router.put("/:id", users.verifyToken, async (req, res) => {
       res.status(403).json("Access Forbidden");
       return;
     } else {
+
       try {
         await client.connect();
         await wineCol.updateOne(
@@ -191,16 +191,15 @@ router.delete("/:id", users.verifyToken, async (req, res) => {
     }
   })
 });
-router.post("/price/lowerthan/", async (req, res) => {
-
-      try {
-        await client.connect();
-        const wines = await wineCol.find({ prix: { $lt: Number(req.body.prix) } }).toArray();
-        res.send(wines);
-      } finally {
-        await client.close();
-      }
-    });
+router.get("/price/lowerthan/", async (req, res) => {
+  try {
+    await client.connect();
+    const wines = await wineCol.find({ prix : {$lt : Number(req.body.prix)}}).toArray();
+    res.send(wines);
+  } finally {
+    await client.close();
+  }
+});
 
 router.get("/kpi/sum", async (req, res) => {
   try {
