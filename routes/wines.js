@@ -232,10 +232,8 @@ router.get("/prix/", async (req, res) => {
     } finally {
         await client.close();
     }
-<<<<<<< HEAD
-=======
-  })
-});
+})
+
 router.get("/price/lowerthan/", async (req, res) => {
   try {
     await client.connect();
@@ -244,7 +242,6 @@ router.get("/price/lowerthan/", async (req, res) => {
   } finally {
     await client.close();
   }
->>>>>>> 7863fc04235330a80116b353901074da50a1b2a2
 });
 
 router.get("/kpi/sum", async (req, res) => {
@@ -287,10 +284,5 @@ router.get("/kpi/sum", async (req, res) => {
     }
 });
 
-
-<<<<<<< HEAD
 module.exports = router;
-=======
 
-module.exports = router;
->>>>>>> 7863fc04235330a80116b353901074da50a1b2a2
