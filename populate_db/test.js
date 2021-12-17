@@ -5,14 +5,14 @@ require('dotenv').config();
 
 // convert users.csv file to JSON array
 const main = async () => {
-  const uri = process.env.MONGODB_URI
+  const uri = "mongodb://localhost:27017"
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 console.log(uri)
   await client.connect();
-  const database = client.db('Babel');
+  const database = client.db('babel');
   const wineCol = database.collection('wines');
   // const user = database.collection('users');
 
