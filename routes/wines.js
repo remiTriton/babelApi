@@ -12,10 +12,11 @@ const wineCol = database.collection("wines");
 const users = require('./users')
 const jwt = require('jsonwebtoken');
 
+
 router.get("/", async (req, res) => {
   try {
     await client.connect();
-    const wines = await wineCol.find().sort({ cuvee: 1 }).toArray();
+    const wines = await wineCol.find().toArray();
     res.send(wines);
   } finally {
     await client.close();
@@ -38,7 +39,7 @@ router.get("/pagination/:skip/:limit", async (req, res) => {
     await client.connect();
     const skip = parseInt(req.params.skip);
     const limit = parseInt(req.params.limit);
-    const wines = await wineCol.find().sort({ cuvee: 1 }).skip(skip).limit(limit).toArray();
+    const wines = await wineCol.find().skip(skip).limit(limit).toArray();
     res.send(wines)
   } finally {
     await client.close();
@@ -82,7 +83,7 @@ router.get("/search/:cuvee", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.cuvee
-    const wine = await wineCol.find({ cuvee: { $regex: new RegExp(q, "i") } }).sort({ cuvee: 1 }).toArray();
+    const wine = await wineCol.find({ cuvee: { $regex: new RegExp(q, "i") } }).toArray();
     res.send(wine);
   } finally {
     await client.close();
@@ -93,7 +94,7 @@ router.get("/domain/:domaine", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.domaine
-    const wine = await wineCol.find({ domaine: { $regex: new RegExp(q, "i") } }).sort({ cuvee: 1 }).toArray();
+    const wine = await wineCol.find({ domaine: { $regex: new RegExp(q, "i") } }).toArray();
     res.send(wine);
   } finally {
     await client.close();
@@ -105,12 +106,12 @@ router.get("/color/:couleur", async (req, res) => {
     await client.connect();
     if (req.params.couleur === "Magnum") {
       const query = { type: req.params.couleur };
-      const wine = await wineCol.find(query).sort({ cuvee: 1 }).toArray();
+      const wine = await wineCol.find(query).toArray();
       res.send(wine);
 
     } else {
       const query = { couleur: req.params.couleur };
-      const wine = await wineCol.find(query).sort({ cuvee: 1 }).toArray();
+      const wine = await wineCol.find(query).toArray();
       res.send(wine);
     }
   } finally {
@@ -122,7 +123,7 @@ router.get("/cepage/:cepage", async (req, res) => {
   try {
     await client.connect();
     const query = { cepage: req.params.cepage };
-    const wine = await wineCol.find(query).sort({ cuvee: 1 }).toArray();
+    const wine = await wineCol.find(query).toArray();
     res.send(wine);
   } finally {
     await client.close();
@@ -134,7 +135,7 @@ router.get("/region/:region", async (req, res) => {
     await client.connect();
     const q = req.params.region
     const query = { region: { $regex: new RegExp(q, "i") } };
-    const wine = await wineCol.find(query).sort({ cuvee: 1 }).toArray();
+    const wine = await wineCol.find(query).toArray();
     res.send(wine);
   } finally {
     await client.close();
@@ -145,7 +146,7 @@ router.get("/pays/:pays", async (req, res) => {
     await client.connect();
     const q = req.params.pays
     const query = { pays: { $regex: new RegExp(q, "i") } };
-    const wine = await wineCol.find(query).sort({ cuvee: 1 }).toArray();
+    const wine = await wineCol.find(query).toArray();
     res.send(wine);
   } finally {
     await client.close();
@@ -158,7 +159,6 @@ router.put("/:id", users.verifyToken, async (req, res) => {
       res.status(403).json("Access Forbidden");
       return;
     } else {
-
       try {
         await client.connect();
         await wineCol.updateOne(
@@ -195,7 +195,7 @@ router.post("/price/lowerthan/", async (req, res) => {
 
       try {
         await client.connect();
-        const wines = await wineCol.find({ prix: { $lt: Number(req.body.prix) } }).sort({ cuvee: 1 }).toArray();
+        const wines = await wineCol.find({ prix: { $lt: Number(req.body.prix) } }).toArray();
         res.send(wines);
       } finally {
         await client.close();
