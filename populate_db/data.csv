@@ -1,13 +1,4 @@
-<<<<<<< HEAD
-Couleur;CUVEE;domaine;Departement;region;pays;millesime;cepage;Vigneron;prix;Quantité;description
-
-Ovni;GUY;;;;France;;;LA SORGA;;0;
-Ovni;MUSCAT DE RIVESALTES;;;;France;;;LES ENFANTS SAUVAGES;;0;
-Ovni;C’ERA UNA VOLTA IL PASSATO;;;;Italie;;;CASCINA DEGLI ULIVI;;0;
-Ovni;BIRBET;;;;Italie;;;FILIPPO GALLINO;;0;
-Ovni;LA PRATS;;;;Espagne;;;ORIOL ARTIGAS;;0;
-=======
-Couleur;CUVEE;domaine;departement;region;pays;millesime;cepage;Vigneron;prix;Quantité;Description
+Couleur;CUVEE;domaine;departement;region;pays;millesime;cepage;Vigneron;prix;Quantite;Description
 
 Blanc;Bg;Antoine Marie Arena;;Corse;France;2018;Bianco gentile;ANTOINE-MARIE ARENA;;0;Un vin blanc très droit. Rond et un peu beurre.
 Blanc;Fais Pas Sans Blanc;Vin de Potes x Champs des Barbiers;;Languedoc-Rousillon;France;2020;Vermentino, Uni blanc, Sauvignon, Grenache blanc;CHAMPS DES BARBIERS X VIN DES POTES;;0;Bien minéralité, comète anisée et citronnée.
@@ -90,4 +81,3 @@ Blanc;MOLI;;;;Italie;;;SETE;;0;
 Blanc;Tropical;Azienda agricola SETE. ;;Lazio;Italie;2020;Ottonese;SETE;;0;A vin très frais, fruité et tropicaux. Petite macération de 24h qui nous donnerais les  notes d’ananas. 
 Blanc;Palmento Bianco;Vino di Anna;;Sicile;Italie;2019;Grecanico, Cataretto;VINO DI ANNA;;0;La moitié du Grecanico avec le Grecanico Dorato a été macérée pendant une semaine sur les peaux. Les Cataretto ont éte pressées en direct.Ca nous donne un vin blanc mineral sur les notes abricots et prune mais avec un peu  d’acidity.
 Blanc;BIANCO;;;;Italie;;;LE COSTE;;0;
->>>>>>> f6247cc7257be6d7d6755a5fdea162b5e8ff06b1
