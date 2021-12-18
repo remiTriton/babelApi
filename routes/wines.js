@@ -34,6 +34,19 @@ const wineFields = {
   description: 1,
 }
 
+
+router.get('/pages/', async (req, res) => {
+  try {
+    await client.connect();
+    const wines = await wineCol
+    .countDocuments();
+    console.log((wines/24))
+    res.status(200).json((wines/24));
+  }finally{
+    await client.close();
+  }
+})
+
 router.get("/", async (req, res) => {
   try {
     await client.connect();
