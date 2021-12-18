@@ -61,6 +61,11 @@ router.get('/:id/image', async (req, res) => {
 
     const wine = await wineCol.findOne(query, { projection });
 
+    if (!wine.imgBase64) {
+      await client.close();
+      return res.end('no img')
+    }
+
     const img = Buffer.from(wine.imgBase64.replace(/^data:image\/png;base64,/, ''), 'base64');
     res.writeHead(200, {
       'Content-Type': 'image/png',
