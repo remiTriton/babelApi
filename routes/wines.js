@@ -40,7 +40,6 @@ router.get('/pages/', async (req, res) => {
     await client.connect();
     const wines = await wineCol
     .countDocuments();
-    console.log((wines/24))
     res.status(200).json((wines/24));
   }finally{
     await client.close();
@@ -189,10 +188,12 @@ router.get("/color/:couleur", async (req, res) => {
 
     } else {
       const query = { couleur: req.params.couleur };
+      const pagination =  await wineCol
+      .countDocuments(query)/24;
       const wine = await wineCol.find(query)
         .project(wineFields)
         .toArray();
-      res.send(wine);
+      res.send({wine,pagination})
     }
   } finally {
     await client.close();
