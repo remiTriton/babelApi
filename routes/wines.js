@@ -7,7 +7,7 @@ const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const database = client.db("Babel");
+const database = client.db("babel");
 const wineCol = database.collection("wines");
 const users = require('./users')
 const jwt = require('jsonwebtoken');

@@ -12,7 +12,7 @@ const main = async () => {
     });
     console.log(uri)
     await client.connect();
-    const database = client.db('Babel');
+    const database = client.db('babel');
     const wineCol = database.collection('wines');
     // const user = database.collection('users');
     // const password = await new Promise((resolve, reject) => {

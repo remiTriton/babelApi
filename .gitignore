@@ -7,3 +7,4 @@ dist-ssr
 *.local
 .env
 .vscode
+.docker-compose.yml
