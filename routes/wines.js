@@ -39,23 +39,28 @@ router.get('/pages/', async (req, res) => {
   try {
     await client.connect();
     const wines = await wineCol
-    .countDocuments();
-    res.status(200).json((wines/24));
-  }finally{
+      .countDocuments();
+    res.status(200).json((wines / 24));
+  } finally {
     await client.close();
   }
 })
 
-router.get("/", async (req, res) => {
+router.get("/all/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
-
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pages = await wineCol
+    .countDocuments()/24;
     const wines = await wineCol
       .find({})
       .project(wineFields)
+      .skip(skip)
+      .limit(limit)
       .toArray();
 
-    res.send(wines);
+    res.send({wines, pages});
   } finally {
     await client.close();
   }
@@ -176,24 +181,34 @@ router.get("/domain/:domaine", async (req, res) => {
   }
 });
 
-router.get("/color/:couleur", async (req, res) => {
+router.get("/color/:couleur/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
     if (req.params.couleur === "Magnum") {
+      const skip = parseInt(req.params.skip);
+      const limit = parseInt(req.params.limit);
       const query = { type: req.params.couleur };
+      const pagination = await wineCol
+        .countDocuments(query) / 24;
       const wine = await wineCol.find(query)
         .project(wineFields)
+        .skip(skip)
+        .limit(limit)
         .toArray();
-      res.send(wine);
+      res.send({ wine, pagination });
 
     } else {
+      const skip = parseInt(req.params.skip);
+      const limit = parseInt(req.params.limit);
       const query = { couleur: req.params.couleur };
-      const pagination =  await wineCol
-      .countDocuments(query)/24;
+      const pagination = await wineCol
+        .countDocuments(query) / 24;
       const wine = await wineCol.find(query)
         .project(wineFields)
+        .skip(skip)
+        .limit(limit)
         .toArray();
-      res.send({wine,pagination})
+      res.send({ wine, pagination })
     }
   } finally {
     await client.close();
@@ -254,7 +269,7 @@ router.put("/:id", users.verifyToken, async (req, res) => {
           { _id: new ObjectId(req.params.id) },
           {
             $set:
-            req.body
+              req.body
           }
         );
         res.send("Wine updated");
