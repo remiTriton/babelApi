@@ -12,27 +12,27 @@ const main = async () => {
     });
     console.log(uri)
     await client.connect();
-    const database = client.db('Babel');
+    const database = client.db('babel');
     const wineCol = database.collection('wines');
-    const user = database.collection('users');
-    const password = await new Promise((resolve, reject) => {
-      bcrypt.genSalt(10, (err, salt) => bcrypt.hash('admin', salt, (err, hash) => {
-        if (err) {
-          reject(err)
-          return;
-        }
-        resolve(hash)
-        return;
-      }))
-    })
+    // const user = database.collection('users');
+    // const password = await new Promise((resolve, reject) => {
+    //   bcrypt.genSalt(10, (err, salt) => bcrypt.hash('admin', salt, (err, hash) => {
+    //     if (err) {
+    //       reject(err)
+    //       return;
+    //     }
+    //     resolve(hash)
+    //     return;
+    //   }))
+    // })
 
-    user.insertOne({
-      firstName: 'admin',
-      lastName: 'admin',
-      email: 'admin@admin',
-      password,
-      role: "Admin",
-    })
+    // user.insertOne({
+    //   firstName: 'admin',
+    //   lastName: 'admin',
+    //   email: 'admin@admin',
+    //   password,
+    //   role: "Admin",
+    // })
 
 
     const fileContent = await fs.readFile('./populate_db/data.csv');

@@ -9,7 +9,7 @@ const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-const database = client.db('Babel');
+const database = client.db('babel');
 const userCol = database.collection('users');
 
 router.get('/', verifyToken, async (req, res) => {
