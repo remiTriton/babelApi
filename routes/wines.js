@@ -7,7 +7,7 @@ const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const database = client.db("babel");
+const database = client.db("Babel");
 const wineCol = database.collection("wines");
 const users = require('./users')
 const jwt = require('jsonwebtoken');
@@ -34,25 +34,13 @@ const wineFields = {
   description: 1,
 }
 
-
-router.get('/pages/', async (req, res) => {
-  try {
-    await client.connect();
-    const wines = await wineCol
-      .countDocuments();
-    res.status(200).json((wines / 24));
-  } finally {
-    await client.close();
-  }
-})
-
 router.get("/all/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
     const skip = parseInt(req.params.skip);
     const limit = parseInt(req.params.limit);
     const pages = await wineCol
-    .countDocuments()/24;
+      .countDocuments() / 24;
     const wines = await wineCol
       .find({})
       .project(wineFields)
@@ -60,7 +48,7 @@ router.get("/all/:skip/:limit", async (req, res) => {
       .limit(limit)
       .toArray();
 
-    res.send({wines, pages});
+    res.send({ wines, pages });
   } finally {
     await client.close();
   }
@@ -104,22 +92,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/pagination/:skip/:limit", async (req, res) => {
-  try {
-    await client.connect();
-    const skip = parseInt(req.params.skip);
-    const limit = parseInt(req.params.limit);
-    const wines = await wineCol
-      .find()
-      .project(wineFields)
-      .skip(skip)
-      .limit(limit)
-      .toArray();
-    res.send(wines)
-  } finally {
-    await client.close();
-  }
-})
 
 router.post("/", users.verifyToken, async (req, res) => {
   jwt.verify(req.token, 'token', async (err, authData) => {
@@ -154,28 +126,40 @@ router.post("/", users.verifyToken, async (req, res) => {
   })
 });
 
-router.get("/search/:cuvee", async (req, res) => {
+router.get("/search/:cuvee/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
-    const q = req.params.cuvee
+    const query = { cuvee: { $regex: new RegExp(req.params.cuvee, "i") } }
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await wineCol
+      .countDocuments(query) / 24;
     const wine = await wineCol
-      .find({ cuvee: { $regex: new RegExp(q, "i") } })
+      .find(query)
       .project(wineFields)
+      .skip(skip)
+      .limit(limit)
       .toArray();
-    res.send(wine);
+    res.send({ wine, pagination });
   } finally {
     await client.close();
   }
 });
 
-router.get("/domain/:domaine", async (req, res) => {
+router.get("/domain/:domaine/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
-    const q = req.params.domaine
-    const wine = await wineCol.find({ domaine: { $regex: new RegExp(q, "i") } })
+    const query = { domaine: { $regex: new RegExp(req.params.domaine, "i") } }
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await wineCol
+      .countDocuments(query) / 24;
+    const wine = await wineCol.find(query)
       .project(wineFields)
+      .skip(skip)
+      .limit(limit)
       .toArray();
-    res.send(wine);
+    res.send({wine,pagination});
   } finally {
     await client.close();
   }
@@ -215,42 +199,60 @@ router.get("/color/:couleur/:skip/:limit", async (req, res) => {
   }
 });
 
-router.get("/cepage/:cepage", async (req, res) => {
+router.get("/cepage/:cepage/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
-    const query = { cepage: req.params.cepage };
+    const query = { cepage: { $regex: new RegExp(req.params.cepage, "i") }};
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await wineCol
+        .countDocuments(query) / 24;
     const wine = await wineCol.find(query)
       .project(wineFields)
+      .skip(skip)
+      .limit(limit)
       .toArray();
-    res.send(wine);
+    res.send({wine,pagination});
   } finally {
     await client.close();
   }
 });
 
-router.get("/region/:region", async (req, res) => {
+router.get("/region/:region/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.region
     const query = { region: { $regex: new RegExp(q, "i") } };
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await wineCol
+        .countDocuments(query) / 24;
     const wine = await wineCol.find(query)
       .project(wineFields)
+      .skip(skip)
+      .limit(limit)
       .toArray();
-    res.send(wine);
+    res.send({wine,pagination});
   } finally {
     await client.close();
   }
 });
 
-router.get("/pays/:pays", async (req, res) => {
+router.get("/pays/:pays/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
     const q = req.params.pays
     const query = { pays: { $regex: new RegExp(q, "i") } };
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await wineCol
+        .countDocuments(query) / 24;
     const wine = await wineCol.find(query)
       .project(wineFields)
+      .skip(skip)
+      .limit(limit)
       .toArray();
-    res.send(wine);
+    res.send({wine,pagination});
   } finally {
     await client.close();
   }
@@ -306,7 +308,7 @@ router.get("/prix/", async (req, res) => {
   }
 })
 
-router.get("/price/lowerthan/", async (req, res) => {
+router.post("/price/lowerthan/", async (req, res) => {
   try {
     await client.connect();
     const wines = await wineCol.find({ prix: { $lt: Number(req.body.prix) } }).toArray();
