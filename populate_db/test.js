@@ -32,8 +32,6 @@ const main = async () => {
     //   password,
     //   role: "Admin",
     // })
-
-
     const fileContent = await fs.readFile('./populate_db/data.csv');
 
     const fileContentStr = String(fileContent);
