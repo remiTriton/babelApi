@@ -7,17 +7,12 @@ const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const database = client.db("Babel");
+const database = client.db("babel");
 const wineCol = database.collection("wines");
 const users = require('./users')
 const jwt = require('jsonwebtoken');
 
-// router.get("nb-wines")
-// const count = await wineCol.countDocuments();
-// retourne par ex 200 vins
 
-// router.get("/:from/:nb")
-// e.g: '/0/10' (11 vins)
 
 const wineFields = {
   couleur: 1,
@@ -356,6 +351,8 @@ router.get("/kpi/sum", async (req, res) => {
     await client.close();
   }
 });
+
+
 
 module.exports = router;
 

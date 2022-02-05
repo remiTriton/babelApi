@@ -8,7 +8,7 @@ const client = new MongoClient(uri, {
    useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const database = client.db("Babel");
+const database = client.db("babel");
 const orderCol = database.collection("orders");
 const wineCol = database.collection('wines');
 const users = require('./users')
@@ -50,6 +50,7 @@ router.post("/", users.verifyToken, async (req, res) => {
                             id: product._id,
                             cuvee: product.cuvee,
                             quantite: req.body.quantite,
+                            domaine:product.domaine
                         }],
                 };
                 const result = await orderCol.insertOne(doc);
@@ -106,6 +107,7 @@ router.put("/:id", users.verifyToken, async (req, res) => {
                             wineId: product._id,
                             cuvee: product.cuvee,
                             couleur: product.couleur,
+                            domaine:product.domaine,
                             quantite: req.body.quantite,
                         }
                     }
