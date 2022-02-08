@@ -158,17 +158,17 @@ router.get("/:type/:skip/:limit", async (req, res) => {
     const limit = parseInt(req.params.limit);
     const pagination = await alcCol
       .countDocuments(query) / 24;
-    const alcool = await alcCol.find(query)
+    const alcools = await alcCol.find(query)
       .project(alcoolFields)
       .skip(skip)
       .limit(limit)
       .toArray();
-    res.send({ alcool, pagination });
+    res.send({ alcools, pagination });
   } finally {
     await client.close();
   }
 });
-router.get("/search/:cuvee/:skip/:limit", async (req, res) => {
+router.get("/cuvee/:cuvee/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
     const query = { cuvee: { $regex: new RegExp(req.params.cuvee, "i") } }
@@ -176,13 +176,71 @@ router.get("/search/:cuvee/:skip/:limit", async (req, res) => {
     const limit = parseInt(req.params.limit);
     const pagination = await alcCol
       .countDocuments(query) / 24;
-    const alcool = await alcCol
+    const alcools = await alcCol
       .find(query)
       .project(alcoolFields)
       .skip(skip)
       .limit(limit)
       .toArray();
-    res.send({ alcool, pagination });
+    res.send({ alcools, pagination });
+  } finally {
+    await client.close();
+  }
+});
+router.get("/centilitrage/:centilitrage/:skip/:limit", async (req, res) => {
+  try {
+    await client.connect();
+    const query = { centilitrage: { $regex: new RegExp(req.params.centilitrage, "i") } }
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await alcCol
+      .countDocuments(query) / 24;
+    const alcools = await alcCol
+      .find(query)
+      .project(alcoolFields)
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+    res.send({ alcools, pagination });
+  } finally {
+    await client.close();
+  }
+});
+
+router.get("/producteur/:producteur/:skip/:limit", async (req, res) => {
+  try {
+    await client.connect();
+    const query = { producteur: { $regex: new RegExp(req.params.producteur, "i") } }
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await alcCol
+      .countDocuments(query) / 24;
+    const alcools = await alcCol
+      .find(query)
+      .project(alcoolFields)
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+    res.send({ alcools, pagination });
+  } finally {
+    await client.close();
+  }
+});
+
+router.post("/price/:skip/:limit", async (req, res) => {
+  try {
+    await client.connect();
+    const query = { prix: { $lte: Number(req.body.prix) } }
+    const skip = parseInt(req.params.skip);
+    const limit = parseInt(req.params.limit);
+    const pagination = await alcCol
+      .countDocuments(query) / 24;
+    const alcools = await alcCol.find(query)
+      .sort({ prix: -1 })
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+    res.send({ alcools, pagination });
   } finally {
     await client.close();
   }
