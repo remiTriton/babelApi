@@ -245,5 +245,46 @@ router.post("/price/:skip/:limit", async (req, res) => {
     await client.close();
   }
 });
+router.get("/allAlcools/kpi", async (req, res) => {
+  try {
+    await client.connect();
+
+    const totalByType = await alcCol.aggregate([{
+      "$group": {
+        "_id": "$type",
+        "prices": {
+          "$sum": {
+            "$multiply": ["$prix", "$quantite"]
+          }
+
+        },
+        "quantite": {
+          "$sum": "$quantite",
+        }
+      },
+    },
+    ]).toArray();
+    const total = await alcCol.aggregate([{
+      "$group": {
+        "_id": "null",
+        "prices": {
+          "$sum": {
+            "$multiply": ["$prix", "$quantite"]
+          }
+
+        },
+        "quantite": {
+          "$sum": "$quantite",
+        }
+      },
+    },
+    ]).toArray();
+    res.send([totalByType, total])
+  }catch(e){
+    console.log(e)
+  } finally {
+    await client.close();
+  }
+});
 
   module.exports = router;
