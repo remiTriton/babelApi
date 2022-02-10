@@ -4,13 +4,15 @@ require('dotenv').config();
 const { MongoClient, ObjectId } = require("mongodb");
 const router = express.Router();
 const uri = process.env.MONGODB_URI
-const client = new MongoClient(uri, { 
-   useNewUrlParser: true,
-  useUnifiedTopology: true,
+const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 const database = client.db("babel");
 const orderCol = database.collection("orders");
 const wineCol = database.collection('wines');
+const alcCol = database.collection('alcools');
+
 const users = require('./users')
 const jwt = require('jsonwebtoken');
 
@@ -42,7 +44,7 @@ router.post("/", users.verifyToken, async (req, res) => {
                 const product = await wineCol.findOne(new ObjectId(id));
                 // create a document to insert
                 const doc = {
-                    
+
                     userEmail: req.body.email,
                     status: 'Waiting',
                     wines:
@@ -50,7 +52,7 @@ router.post("/", users.verifyToken, async (req, res) => {
                             id: product._id,
                             cuvee: product.cuvee,
                             quantite: req.body.quantite,
-                            domaine:product.domaine
+                            domaine: product.domaine
                         }],
                 };
                 const result = await orderCol.insertOne(doc);
@@ -59,6 +61,8 @@ router.post("/", users.verifyToken, async (req, res) => {
                 const doc = {
                     Created: Date(),
                     userEmail: req.body.email,
+                    status: 'En attente de validation',
+
                 };
                 const result = await orderCol.insertOne(doc);
                 const newOrder = await orderCol.findOne({ _id: new ObjectId(result.insertedId) });
@@ -107,7 +111,7 @@ router.put("/:id", users.verifyToken, async (req, res) => {
                             wineId: product._id,
                             cuvee: product.cuvee,
                             couleur: product.couleur,
-                            domaine:product.domaine,
+                            domaine: product.domaine,
                             quantite: req.body.quantite,
                         }
                     }
@@ -121,7 +125,39 @@ router.put("/:id", users.verifyToken, async (req, res) => {
         }
     })
 });
+router.put("/addAlcool/:id", users.verifyToken, async (req, res) => {
+    jwt.verify(req.token, 'token', async (err, authData) => {
+        if (authData.user.role === 'Serveur') {
+            res.status(403).json("Access Forbidden");
+        }
+        try {
+            await client.connect();
+            const id = req.body.id;
+            const product = await alcCol.findOne(new ObjectId(id));
+            await orderCol.updateOne(
+                { _id: new ObjectId(req.params.id) },
+                {
+                    $set: { status: req.body.status },
+                    $push: {
+                        alcools:
+                        {
+                            alcoolId: product._id,
+                            cuvee: product.cuvee,
+                            type: product.type,
+                            centilitrage: product.centilitrage,
+                            quantite: req.body.quantite,
+                        }
+                    }
+                }
+            );
+            const order = await orderCol.findOne((new ObjectId(req.params.id)));
 
+            res.send(order);
+        } finally {
+            await client.close();
+        }
+    })
+});
 
 router.put("/validate/:id", users.verifyToken, async (req, res) => {
     jwt.verify(req.token, 'token', async (err, authData) => {
@@ -151,13 +187,22 @@ router.put("/confirm/:id", users.verifyToken, async (req, res) => {
         }
         try {
             await client.connect();
-            const result = await orderCol.updateOne(
-                { _id: new ObjectId(req.params.id), "wines.cuvee": req.body.cuvee, "wines.couleur": req.body.couleur },
-                {
-                    $set: { "wines.$.quantite": req.body.quantite }
-                }
-            );
-            res.send(result);
+            if (req.body.couleur) {
+                const result = await orderCol.updateOne(
+                    { _id: new ObjectId(req.params.id), "wines.cuvee": req.body.cuvee, "wines.couleur": req.body.couleur },
+                    {
+                        $set: { "wines.$.quantite": req.body.quantite }
+                    }
+                ); res.send(result);
+            } else if (req.body.type) {
+                const result = await orderCol.updateOne(
+                    { _id: new ObjectId(req.params.id), "alcools.cuvee": req.body.cuvee, "alcools.type": req.body.type },
+                    {
+                        $set: { "alcools.$.quantite": req.body.quantite }
+                    }
+                ); res.send(result);
+
+            };
         } finally {
             await client.close();
         }
@@ -166,7 +211,7 @@ router.put("/confirm/:id", users.verifyToken, async (req, res) => {
 
 router.delete("/:id", users.verifyToken, async (req, res) => {
     jwt.verify(req.token, 'token', async (err, authData) => {
-        if(authData.user.role === 'Serveur') {
+        if (authData.user.role === 'Serveur') {
             res.status(403).json("Access Forbidden");
         }
         try {
@@ -209,14 +254,25 @@ router.put("/deleteOneWine/:id", users.verifyToken, async (req, res) => {
         }
         try {
             await client.connect();
-            const order = await orderCol.updateOne({
+            if (req.body.wineId) {
+                const order = await orderCol.updateOne({
 
-                _id: new ObjectId(req.params.id)
-            },
-                { $pull: { wines: { wineId: ObjectId(req.body.wineId) } } },
-                { multi: true }
-            );
-            res.send(order)
+                    _id: new ObjectId(req.params.id)
+                },
+                    { $pull: { wines: { wineId: ObjectId(req.body.wineId) } } },
+                    { multi: true }
+                );
+                res.send(order)
+            } else {
+                const order = await orderCol.updateOne({
+
+                    _id: new ObjectId(req.params.id)
+                },
+                    { $pull: { alcools: { alcoolId: ObjectId(req.body.alcoolId) } } },
+                    { multi: true }
+                );
+                res.send(order)
+            }
         } finally {
             await client.close();
         }
