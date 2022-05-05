@@ -1,6 +1,15 @@
 version: "3.9"
 
 services:
+  back:
+    image: babelb
+    restart: always
+    build: .
+    ports : 
+      - 3001:3001
+    environment:
+      -  MONGODB_URI=mongodb://db:27017
+
   db:
     image: mongo
     container_name: babel_mongodb

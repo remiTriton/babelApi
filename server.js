@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 app.listen(port, () => {
-  console.log(`Successfull connection on port : ${port}`);
+  console.log(`Successfull connection on port : ${port}`, process.env.MONGODB_URI, "salut toi")
 });
 module.exports = app;
 

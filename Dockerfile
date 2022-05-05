@@ -1,10 +1,12 @@
 FROM node:16-alpine
 
-WORKDIR /node-back
+WORKDIR /babelApi
+
+COPY ["package.json", "package-lock.json*", "./"]
+
+RUN npm install
 
 COPY . .
-
-RUN npm ci
 
 CMD npm run start
 
