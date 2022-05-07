@@ -8,7 +8,7 @@ const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-const database = client.db("babel");
+const database = client.db("Babel");
 const orderCol = database.collection("orders");
 const wineCol = database.collection('wines');
 const alcCol = database.collection('alcools');
