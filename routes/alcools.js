@@ -94,7 +94,7 @@ const alcoolFields = {
   
       const alcool = await alcCol.findOne(query, { projection });
   
-      if (wine.imgBase64) {
+      if (alcool.imgBase64) {
         const img = Buffer.from(alcool.imgBase64.replace(/^data:image\/png;base64,/, ''), 'base64');
         res.writeHead(200, {
           'Content-Type': 'image/png',
