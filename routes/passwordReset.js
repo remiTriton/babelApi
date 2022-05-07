@@ -7,7 +7,7 @@ const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-const database = client.db("babel");
+const database = client.db("Babel");
 const userCol = database.collection("users");
 const sendEmail = require('../utils/sendEmail');
 const bcrypt = require('bcryptjs')

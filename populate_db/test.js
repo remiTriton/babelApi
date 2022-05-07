@@ -10,7 +10,6 @@ const main = async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-    console.log(uri)
     await client.connect();
     const database = client.db('babel');
     const wineCol = database.collection('alcools');
