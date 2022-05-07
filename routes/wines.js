@@ -296,7 +296,7 @@ router.delete("/:id", users.verifyToken, async (req, res) => {
 router.post("/price/lowerthan/:skip/:limit", async (req, res) => {
   try {
     await client.connect();
-    const query = { prix: { $lt: Number(req.body.prix) } }
+    const query = { prix: { $lte: Number(req.body.prix) } }
     const skip = parseInt(req.params.skip);
     const limit = parseInt(req.params.limit);
     const pagination = await wineCol

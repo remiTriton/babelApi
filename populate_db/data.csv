@@ -1,12 +1,36 @@
 type;prix;quantite;producteur;centilitrage;cuvee
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
-soft;6.5;25;massilia;75 cl;coca;
+soft;3;25;jean;75 ;coca;
+soft;9;25;michel;75 ;orangina;
+soft;3.25;25;diego;75 ;coca zero;
+soft;2.2;25;pablo;75 ;coca light;
+soft;2.8;25;pablito;75 ;fanta;
+soft;2.1;25;cocorico;75 ;ice tea;
+digestifs liqueur;25;25;italia;75;limoncello;
+digestifs liqueur;12;25;italia;75;orangecello;
+digestifs liqueur;15;25;italia;75;tequila;
+digestifs liqueur;10;25;italia;75;paf;
+sherry;10;25;italia;75;cheri;
+sherry;30;25;italia;75;pupuce;
+sherry;40;25;italia;75;cabron;
+sherry;50;25;italia;75;kikoo;
+sherry;100;25;italia;75;jesus;
+anise mediterranée;20;25;italia;75;ricard;
+anise mediterranée;25;25;italia;75;pastis;
+anise mediterranée;14;25;italia;75;eau de mer;
+anise mediterranée;12;25;italia;75;eau de vie;
+anise mediterranée;60;25;italia;75;51;
+apéritifs;12;25;italia;75;martini;
+apéritifs;15;25;italia;75;martini blanc;
+apéritifs;17;25;italia;75;martini rouge;
+apéritifs;18;25;italia;75;martini vert;
+apéritifs;32;25;italia;75;martini bleu;
+apéritifs;35;25;italia;75;martini violet;
+spiritueux;42;25;italia;75;decoiffage;
+spiritueux;42;25;italia;75;recoiffage;
+spiritueux;24;25;italia;75;rembourrage;
+spiritueux;86;25;italia;75;religieux;
+spiritueux;75;25;italia;75;omega;
+spiritueux;42;25;italia;75;russe;
+
+
+
